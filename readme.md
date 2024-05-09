@@ -62,56 +62,71 @@ Alternatively, for PA1 specifically you can [access the StarterCode at this link
 
 Write the following methods inside class `Repository`:
 
-> init
+### init
 
 ```
 public void init()
 ```
 Initialize a minigit repository
 
->add
+### add
 
 ```
 public void add(String[] args)
 ```
 Stage files
 
+### commit
+
 ```
 public void commit(String[] args)
 ```
 
+### rm
 
 ```
 public void rm(String[] args)
 ```
 
+### log
 ```
 public void log()
 ```
+
+### globalLog
 
 ```
 public void globalLog()
 ```
 
+### find
+
 ```
 public void find(String[] args)
 ```
 
+### checkout
 ```
 public void checkout(String[] args)
 ```
 
+### branch
 ```
 public void branch(String[] args)
 ```
 
+### rmBranch
 ```
 public void rmBranch(String[] args)
 ```
 
+### reset
+
 ```
 public void reset(String[] args)
 ```
+
+### status
 
 ```
 public void status()
