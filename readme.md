@@ -25,7 +25,7 @@ For the first assignment, you will implement XYZ
 ### Introduction to Persistence
 
 You may have noticed by now that you will need to a way to preserve the state of a program after it finishes running. 
-The way this is accomplished is through the idea of **persistence**. For example, if your program writes contents to a file,
+The way this is accomplished is through the concept of **persistence**. For example, if your program writes contents to a file,
 the file will stay there even after the program finishes running.
 
 First, let's start with basic persistence: writing plain text to a file. 
@@ -60,259 +60,60 @@ Alternatively, for PA1 specifically you can [access the StarterCode at this link
 ## Part 3 - Implementation
 [(top)](#contents)
 
-Write the following methods inside class `ProgrammingChallenges`:
+Write the following methods inside class `Repository`:
 
-> Problem 1 (Purpose: Boolean Operators)
+> init
+```
+public void init()
+```
+Initialize a minigit repository
+
+>add
+```
+public void add(String[] args)
+```
+Stage files
 
 ```
-// 1
-public static boolean store(String item, float inWallet, float needed)
-```
-
-You decided to celebrate the beginning of the quarter and went to the store to buy something tasty. You have some cash in your wallet and there is also an amount that you must pay at the store. Write a method that returns true when the item is equal to “cake”, “ice-cream”, or “sushi” and you have enough money in your wallet.
-
-**Example: (notice how we denote a float here)**
-
-```
-Input: sushi, 4.4f, 5.43f
-Output: false  
-
-Input: rice, 100f, 5f
-Output: false  
-
-Input: ice-cream, 100f, 5f 
-Output: true  
-
-Input: ice-cream, 5f, 10.5f 
-Output: false
-```
-
-> Problem 2. (Array manipulations, no loop)
-
-```
-// 2
-public static boolean compareArrays(int [] arr1, int [] arr2)
-```
-
-Given two integer arrays, with length 1 or more. Write a method that returns true when:
-- Both arrays have different lengths and
-- The first element of the first array is the same as the last element of the second array and
-- The last element of the first array is the same as the first element of the second array.
-
-Return false otherwise.
-
-**Example:**
-
-```
-Input: [1, 3, 4], [2, 4, 6] 
-Output: false  
-
-Input: [1, 3, 4], [4, 4, 6, 1]
-Output: true
-
-Input: [1, 3, 4], [4, 4, 1]
-Output: false
-```
-
-> Problem 3. (Purpose: Single for loop and array practice)
-
-```
-// 3
-public static int countNumbers(int [] arr1)
-```
-
-Given one integer array. Write a method that counts:
-- The number of even numbers NOT divisible by 3.
-
-**Example:**
-
-```
-Input: [1, 3, 4] 
-Output: 1  
-
-Input: [4, 4, 6, 1]
-Output: 2
-
-Input: [6, 12, 18]
-Output: 0
-```
-
-> Problem 4. (Purpose: Single while loop)
-
-```
-// 4 
-public static float [] positiveAverage(int [] arr1)
-```
-
-Given one integer array. Write a method that calculates:
-- The number of positive integers in a given array
-- The average of these positive integers.
-
-Returns both numbers in an array, where the first element is the number of positive integers, and the second element is their average.
-
-**Notes:**
-1. Round the average answer to 2 decimals.
-2. Use `Math.round()` for rounding. However, this method only returns an integer! Try to figure out a way around.
-3. Try to use a while loop for practice to solve this problem.
-
-**Example**:
-
-```
-Input: [1, 3, 4] 
-Output: 3.0
-      2.67
-  
-Input: [4, 4, -6, 1]
-Output: 3.0
-       3.0
-
-Input: []
-Output: 0.0
-      0.0
-
-Input: [-4, -4, -6, -1]
-Output: 0.0
-      0.0
-```
-
-> Problem 5. (Purpose: Combining a while loop and Boolean logic)
-
-```
-// 5
-public static boolean sameDigitFirstAndLast(int num1, int num2)
-```
-
-Write a method that takes two non-negative integers and returns `true` if the first digit of the first number is the same as the last digit of the second number.
-
-**Example:**
-
-```
-Input: 57, 78 
-Output: false  
-
-Input: 7333, 7
-Output: true
-```
-
-> Problem 6. (Purpose: Combining a for loop and Boolean logic)
-
-```
-// 6 
-public static boolean decreasingOrder(int[] elems)
-```
-
-Write a method that takes in an integer array and returns `true` if there are **three** consecutive decreasing numbers in this array.
-
-**Example:**
-
-```
-Input: [1, 2, 3, 6, 5, 4]
-Output: true
-Explanation: 6, 5, 4 are decreasing. 
-
-Input: [5, 6, 7, 10, 6, 3]
-Output: true
-Explanation: 10, 6, 3 are decreasing. 
-
-Input: [10, 8, 22, 21, 30, 29] 
-Output: false 
-
-Input: [6, 3, 5, 2, 4, 1]
-Output: false
-Explanation: numbers are not in consecutive order
-```
-
-> Problem 7. (Purpose: Manipulating a 2-D Array)
-
-```
-// 7 
-public static void replaceMainDiagonal(int[][] elems)
-```
-
-Write a method that takes a 2D integer array (square matrix) and replaces its main diagonal with its sum by mutating the input.
-
-> Problem 8. (Purpose: Loop and Array)
-
-```
-// 8
-public static float averageGrade(int[][] grades, int assignmentIndex)
-```
-
-Write a method that takes in a 2-D array where each row represents a student and each column represents an assignment, and the index for an assignment. It returns the average grade for an assignment at the given index.
-
-**Notes:**
-1. Round the answer to 3 decimals.
-2. Use `Math.round()` for rounding. However, this method only returns an integer! Try to figure out a way around.
-3. Assume the assignmentIndex will be valid.
-
-
-**Example:**
-
-```
-Input: [[1, 3, 2, 2], [2, 3, 4, 3], [9, 9, 10, 10]], 0
-Output: 4.0
-Explanation: (1+2+9)/3 = 4.0
-	
-Input: [[1, 10, 3, 2, 7], [10, 4, 3, 4, 3], [6, 3, 9, 1, 3]], 1
-Output: 5.667
-Explanation: (10+4+3)/3 = 5.667
+public void commit(String[] args)
 ```
 
 
-> Problem 9. (Purpose: Recursion and String Operations)
-
 ```
-// 9
-public static String noDots(String str)
+public void rm(String[] args)
 ```
 
-Write a method that takes in a string and returns a new string where all the dots ('.') have been removed.
-
-**Notes:**
-1. This method should be done by **recursion**. (There is a one line solution that uses the `replace` method, you are NOT allowed to use it).
-2. Built-in methods `charAt` and `substring` can be useful here.
-
-**Example:**
-
 ```
-Input: "Recursion is cool." 
-Output: "Recursion is cool"
-
-Input: "M.A.R.I.N.A"
-Output: "MARINA"
-
-Input: "no dots!"
-Output: "no dots!"
+public void log()
 ```
 
-> Problem 10. (Purpose: Conditionals and Arrays)
-
 ```
-// 10
-public static int[] twoElements(int[] elems)
+public void globalLog()
 ```
 
-Write a method that takes in an array of integers and returns a new array of length 2 containing two elements:
-- If the original array's length is less than two, return an empty array.
-- If the original array's length is even, return the middle two elements from the original array
-  0 If the original array's length is odd, return the first and the last elements as the output array.
-
-**Requirement:**
-- Your function should not modify the original array.
-
-**Example:**
-
 ```
-Input: [2, 2, 3, 3, 4, 4, 5, 5] 
-Output: [3, 4]  
-
-Input: [3] 
-Output: [] 
-
-Input: [1, 14, 3] 
-Output: [1, 3] 
+public void find(String[] args)
 ```
 
+```
+public void checkout(String[] args)
+```
+
+```
+public void branch(String[] args)
+```
+
+```
+public void rmBranch(String[] args)
+```
+
+```
+public void reset(String[] args)
+```
+
+```
+public void status()
+```
 
 ## Submission
 [(top)](#contents)
