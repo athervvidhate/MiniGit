@@ -57,9 +57,18 @@ data structures. The concept of **serialization** comes to the rescue.
 
 ### Starter Code
 
-[Starter Code can be found at this link](https://github.com/ucsd-dsc30/sp23-startercode). You can use the git skills you just learned to clone this repository into your own computer. You’ll clone the starter code repository first, and copy ProgrammingChallenges.java (in the cloned repo) into the src folder of the IntelliJ project - the same location where `HelloWorld.java` is created. Note that you should not clone the starter code repository within your IntelliJ project nor within the dsc30-pa1 repo.
+Please follow the following steps to get the startercode:
+1. Create a new repository on github
+   - Make sure you DO NOT check off the option that says "Add a README file" 
+2. Clone this empty repository to your system
+3. Navigate to this repository from your terminal
+4. Paste the following commands
+  ```
+  git remote add skeleton https://github.com/kalkulator413/dsc30-project1-startercode.git
+  git pull skeleton main
+  ```
 
-Alternatively, for PA1 specifically you can [access the StarterCode at this link](https://drive.google.com/drive/folders/1lLhd9hN2Y_2sre3dbpz6fuH-oayM1Bjq). For future PAs you will be required to fetch the StarterCode at the GitHub repository.
+Then, go to IntelliJ, press the "open a new folder" option, and select the repository you just cloned.
 
 ## Part 3 - Implementation
 [(top)](#contents)
