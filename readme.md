@@ -181,18 +181,10 @@ Files to Submit- minigit/Commit.java
 - minigit/Repository.java
 - minigit/Utils.java
 
-### Submission Error Messages
-In a partial or incomplete submission you may receive the following error messages:
-- SUBMISSION FAILED. THE FOLLOWING FILES DO NOT EXIST
+To submit your files, you will need to push your code to your private Github repo first, then turn in this PA to GradeScope by selecting Github as the submission method.
 
-  If you see this, make sure that you have submitted all of your .java files required for this assignment.
+After you submit your files to GradeScope, wait for the output of the submission script. If you see the following message after your submission, your submission is successful and you can ignore the warnings in the autograder output:
 
-- SUBMISSION FAILED. FILES DO NOT COMPILE.
+THIS IS A SUCCESSFUL SUBMISSION. YOUR SCORE WILL BE UPDATED ONCE GRADED.
 
-  Seeing this message means that there are compilation errors in your code. Check the error output and debug these errors before continuing.
-
-- SUBMISSION FAILED. FILES DO NOT COMPILE WITH TESTING CODE.
-
-  At least one of your method signatures is not consistent with the write-up. The error output will specify the lines corresponding to incorrect method signature.
-
-Let us know if you see any other error messages.
+Otherwise, please fix the error and resubmit your files.
