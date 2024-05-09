@@ -22,7 +22,11 @@ For the first assignment, you will implement XYZ
 
 ### Introduction to Git
 
+[Link to tutorial](/dne)
+
 ### Introduction to Persistence
+
+[Link to tutorial](/dne)
 
 You may have noticed by now that you will need to a way to preserve the state of a program after it finishes running. 
 The way this is accomplished is through the concept of **persistence**. For example, if your program writes contents to a file,
@@ -37,8 +41,8 @@ First, let's start with basic persistence: writing plain text to a file.
 [Managing directories]
 
 Now, what happens if we wanted to store an entire object in a file? If we wanted to save a linked list, for example, maybe we could go through 
-each node and save the data on a new line. Then we can reconstruct the linked list in the future whenever we want by going through the 
-file line by line and adding each element to a linked list. However, this is inefficient and can quickly get very complicated for more advanced 
+each node and save the data on a new line. Then we can reconstruct the original linked list in the future whenever we want by going through the 
+file line by line and adding each element to a new linked list. However, this is inefficient and can quickly get very complicated for more advanced 
 data structures. The concept of **serialization** comes to the rescue.
 
 [Explain serializable]
