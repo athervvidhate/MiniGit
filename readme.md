@@ -9,7 +9,7 @@ For the first assignment, you will implement XYZ
 
   **This assignment is an individual assignment.** You may ask Professors/TAs/Tutors for some guidance and help, but you can’t copy code. You may discuss the assignment conceptually with your classmates, including bugs that you ran into and how you fixed them. **However, do not look at or copy code.** This constitutes an Academic Integrity Violation.
 
-Contents
+### Contents
 - [Part 1  - Introduction](#part-1---introduction)
 - [Part 2 - Setup](#part-2---setup)
 - [Part 3 - Implementation](#part-3---implementation)
@@ -18,8 +18,38 @@ Contents
 ## **START EARLY!**
 
 ## Part 1 - Introduction
+[(top)](#contents)
+
+### Introduction to Git
+
+### Introduction to Persistence
+
+You may have noticed by now that you will need to a way to preserve the state of a program after it finishes running. 
+The way this is accomplished is through the idea of **persistence**. For example, if your program writes contents to a file,
+the file will stay there even after the program finishes running.
+
+First, let's start with basic persistence: writing plain text to a file. 
+
+[Writing to files]
+
+[Reading from files]
+
+[Managing directories]
+
+Now, what happens if we wanted to store an entire object in a file? If we wanted to save a linked list, for example, maybe we could go through 
+each node and save the data on a new line. Then we can reconstruct the linked list in the future whenever we want by going through the 
+file line by line and adding each element to a linked list. However, this is inefficient and can quickly get very complicated for more advanced 
+data structures. The concept of **serialization** comes to the rescue.
+
+[Explain serializable]
+
+[Explain write object]
+
+[Explain read object]
+
 
 ## Part 2 - Setup
+[(top)](#contents)
 
 ### Starter Code
 
@@ -28,6 +58,7 @@ Contents
 Alternatively, for PA1 specifically you can [access the StarterCode at this link](https://drive.google.com/drive/folders/1lLhd9hN2Y_2sre3dbpz6fuH-oayM1Bjq). For future PAs you will be required to fetch the StarterCode at the GitHub repository.
 
 ## Part 3 - Implementation
+[(top)](#contents)
 
 Write the following methods inside class `ProgrammingChallenges`:
 
@@ -284,6 +315,7 @@ Output: [1, 3]
 
 
 ## Submission
+[(top)](#contents)
 
 Files to Submit
 - HelloWorld.java
