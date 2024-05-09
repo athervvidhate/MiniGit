@@ -72,14 +72,14 @@ Then, go to IntelliJ, select the "Open" option, and select the repository you ju
 simply double click on the java files to open them in IntelliJ, you need to open the entire folder.**
 Make sure you can run MiniGitTests.
 
-You will be filling in the methods `Repository` class in
+You will be filling in the methods inside the `Repository` class in
 the folder named `minigit/`. It may be helpful to design a `Commit` class and use utility
 methods inside the `Utils` class.
 
 ## Part 3 - Implementation
 [(top)](#contents)
 
-Write the following methods inside class `Repository`:
+Write the following methods inside the `Repository` class:
 - [init](#init)
 - [add](#add)
 - [commit](#commit)
