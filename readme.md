@@ -63,12 +63,14 @@ Alternatively, for PA1 specifically you can [access the StarterCode at this link
 Write the following methods inside class `Repository`:
 
 > init
+
 ```
 public void init()
 ```
 Initialize a minigit repository
 
 >add
+
 ```
 public void add(String[] args)
 ```
