@@ -3,43 +3,31 @@
 Due: Thursday, June 6th, 11:59 PM  
 200 points
 
-### Overview
+## Overview
 
-For the first assignment, you will begin by setting up your development environment for the rest of the quarter. We will be programming in Java using IntelliJ as our IDE. Additionally, we will use Git to handle version control.
+For the first assignment, you will implement XYZ
 
-**This assignment is an individual assignment.** You may ask Professors/TAs/Tutors for some guidance and help, but you can’t copy code. You may discuss the assignment conceptually with your classmates, including bugs that you ran into and how you fixed them. **However, do not look at or copy code.** This constitutes an Academic Integrity Violation.
+  **This assignment is an individual assignment.** You may ask Professors/TAs/Tutors for some guidance and help, but you can’t copy code. You may discuss the assignment conceptually with your classmates, including bugs that you ran into and how you fixed them. **However, do not look at or copy code.** This constitutes an Academic Integrity Violation.
+
+Contents
+- [Part 1  - Introduction](#part-1---introduction)
+- [Part 2 - Setup](#part-2---setup)
+- [Part 3 - Implementation](#part-3---implementation)
+- [Submission](#submission)
 
 ## **START EARLY!**
 
-## Part 1 - Setup
+## Part 1 - Introduction
 
-
-
-## Part 2 - Basic Java Programming Challenges
-
-**First, look over the [Java crash course](https://docs.google.com/document/d/1T28yJoqQlJuVopZjdPOc7Irnpwz5vgTJcRBrpksChCU/edit#heading=h.9lvn0z95r3hv).** You might want to use it as a reference for your future PAs. For details on how to read Java documentation and utilize corresponding methods, please refer to the [java documentation guide](https://docs.google.com/document/d/1Q8VuA7_G_slTEI9urIoglYsX4Clw5V-wBoaK6EluYrM/edit).
-
-### Style Requirements
-Total: 10 Points
-
-You will be graded for the style of programming on every assignment. **Each assignment will have about 10 points just for the style of your code, so make sure you read through this part and strictly follow the style requirements when writing your PAs.** [You may find the style guide on the course website](https://dsc-courses.github.io/dsc30-2023-sp/styleguide/).
-
-This is a complete Java style guide: [Java Style Guide](https://sp18.datastructur.es/materials/guides/style-guide.html) written by Alan Yao from UC Berkeley.
-
-### Implement methods in Java
-
-Now that you have learned how to create and run a simple program in Java using IntelliJ, make a new class called `ProgrammingChallenges` in your PA1 project. (Just like how you created the `HelloWorld` class).
-
-For the class `ProgrammingChallenges`, **you aren’t allowed to import Java packages.** Also, you may assume that all **parameters will not be null.** When you write the methods, make sure your method signature is exactly the same as in the write-up, otherwise, you might lose points for this question since the autograder cannot find the method.
-- Whenever there are questions that require a number to be rounded to some decimal places, please use `String.format` instead of `DecimalFormat`.
-- You should use a main method and print statements in order to test your code. We will learn a better way to test your code soon.
-
+## Part 2 - Setup
 
 ### Starter Code
 
 [Starter Code can be found at this link](https://github.com/ucsd-dsc30/sp23-startercode). You can use the git skills you just learned to clone this repository into your own computer. You’ll clone the starter code repository first, and copy ProgrammingChallenges.java (in the cloned repo) into the src folder of the IntelliJ project - the same location where `HelloWorld.java` is created. Note that you should not clone the starter code repository within your IntelliJ project nor within the dsc30-pa1 repo.
 
 Alternatively, for PA1 specifically you can [access the StarterCode at this link](https://drive.google.com/drive/folders/1lLhd9hN2Y_2sre3dbpz6fuH-oayM1Bjq). For future PAs you will be required to fetch the StarterCode at the GitHub repository.
+
+## Part 3 - Implementation
 
 Write the following methods inside class `ProgrammingChallenges`:
 
@@ -294,96 +282,6 @@ Input: [1, 14, 3]
 Output: [1, 3] 
 ```
 
-## Part 3 Extra Credit (+10 Points)
-
-### One Hot Encoding
-
-Analyzing numeric data is often straightforward. Suppose you have a list of ages of students in DSC30. Each age will be indicated as a number, and you can easily calculate the average, visualize the distribution, etc.
-
-However not all data is numeric. Data has several other distinct types, such as categorical data. Examples of categorical data are nationality, which residential colleges you are in, etc. Unlike numeric data, categorical data is more complicated to analyze because they cannot be directly interpreted mathematically. For example, which number should Revelle College and Sixth College map to? If we assign 1 to Revelle and 2 to Sixth, does it mean Sixth is worth more than Revelle? Probably not.
-
-A common solution to this challenge is called **One Hot Encoding.** It transforms a categorical feature into a one-hot matrix where we use one array for each unique value in the feature, and use 1 to represent the occurrence of this value. For more context and information, please [refer to this website](https://www.educative.io/blog/one-hot-encoding). Below is a brief example of how this works.
-
-![img](https://miro.medium.com/v2/resize:fit:720/format:webp/1*O_pTwOZZLYZabRjw3Ga21A.png)
-
-**Explanation:**
-- There are 4 unique pets (Ca, Dog, Turtle, Fish): it gives you the first dimension of the matrix.
-- There are 5 pets in total: it gives you the second dimension of the matrix.
-- Now, for each occurrence of a pet, you put 1, otherwise you put a 0.
-
-We will break the solution into three methods in order to understand the process better.
-
-> Part 1.  getUnique()
-
-For a given string array that contains several categorical values, return the array with the unique categories but with the same length. The sequence of the returned unique element array is corresponding to the sequence of the first occurrence of each value.
-
-```
-// EC.1
-public static String[] getUnique(String[] arr)
-```
-
-**Example:**
-
-```
-Input : ["BMW", "BMW", "Toyota", "Toyota", "BMW", "Honda", "BMW"]
-Output: ["BMW", "Toyota", "Honda", null, null, null, null]
-```
-
-**Notes:**
-- Output array has the same length as the input array (what if every element is unique?)
-- Keep the order of the unique elements the same as in the original list (i.e. Honda can’t appear before BMW)
-- Make sure to test your code with more inputs! No hardcoding!
-
-> Part 2: getNumOfUniqueElements()
-
-Once you have your array with unique elements calculated, we can use it to find out the number of unique elements. Write a function that takes a string array and outputs a number of unique elements.
-
-```
-// EC.2
-private static int getNumOfUniqueElements(String[] arr)
-```
-
-**Example:**
-
-```
-Input: ["BMW", "Toyota", "Honda", null, null, null, null]
-Output: 3
-```
-
-For a given unique values array, return the number of non-null elements in the array. This is a helper method for the `oneHotEncode()` method with the result from `getUnique()` so that we understand how many unique elements are present in the input array.
-
-> Part 3. oneHotEncode()
-
-Now we are reading to produce the one-hot-encoding matrix. Write a function that takes a string array (categorical feature array) and outputs a feature matrix using one-hot-encoding. You should use methods from part 1 and part 2 to implement this function.
-
-```
-// EC.3
-public static int[][] oneHotEncode(String[] arr)
-```
-
-**Example:**
-
-```
-Input : ["BMW", "BMW", "Toyota", "Toyota", "BMW", "Honda", "BMW"]
-
-uniqueArray: ["BMW", "Toyota", "Honda", null, null, null, null]
-
-Output: [[1, 1, 0, 0, 1, 0, 1],
-         [0, 0, 1, 1, 0, 0, 0],
-         [0, 0, 0, 0, 0, 1, 0]]
-```
-
-A brief explanation of the output:
-
-```
-Output: [[1, 1, 0, 0, 1, 0, 1],  ->  (BMW)
-         [0, 0, 1, 1, 0, 0, 0],  ->  (Toyota)
-         [0, 0, 0, 0, 0, 1, 0]]  ->  (Honda)
-```
-
-The output sequence of the one-hot-encoded array should have the same sequence with the unique array you generated on.
-
-Congratulations! After you implement those one-hot-encoded arrays, now you can feed the matrix into one of the machine learning pipelines of your own!
 
 ## Submission
 
