@@ -62,7 +62,7 @@ Please follow the following steps to get the startercode:
     - **Make sure you DO NOT check off the option that says "Add a README file"**
 2. Clone this empty repository to your system
 3. Navigate to this repository from your terminal
-4. Paste the following commands
+4. Paste the following commands into the terminal:
   ```
   git remote add skeleton https://github.com/kalkulator413/dsc30-project1-startercode.git
   git pull skeleton main
@@ -80,6 +80,18 @@ methods inside the `Utils` class.
 [(top)](#contents)
 
 Write the following methods inside class `Repository`:
+- [init](#init)
+- [add](#add)
+- [commit](#commit)
+- [rm](#rm)
+- [log](#log)
+- [globalLog](#globallog)
+- [find](#find)
+- [checkout](#checkout)
+- [branch](#branch)
+- [rmBranch](#rmbranch)
+- [reset](#reset)
+- [status](#status)
 
 ### init
 
@@ -168,26 +180,6 @@ Files to Submit- minigit/Commit.java
 - minigit/Main.java
 - minigit/Repository.java
 - minigit/Utils.java
-
-Instructions for Submission
-
-![image](https://user-images.githubusercontent.com/50224596/231064671-3d79706b-29da-44ea-a238-b80dd9760757.png)
-
-Once you finish your assignment, you should commit and push your code to Github first.
-
-Then log into Gradescope, and select our course DSC30. On the class dashboard, select the current assignment PA1.
-
-Upon clicking the assignment, a window will prompt for the submission method to select. Select **GitHub** as your submission method. (Note that we only keep the Upload submission method in the first PA in case you have problems using Github. **Starting from next PA, we will disable the upload method and leave only Github as the submission method**) Then click **Connect to GitHub**. Now log in to your Github account and click **Authorize gradescope**.
-
-![image](https://user-images.githubusercontent.com/50224596/231064731-88ee3f59-f8d9-4955-a1ac-0ef27d5a3f54.png)
-
-Select your private repository **dsc30-proj1** as the REPOSITORY, and **main** as the BRANCH. Then click Upload.
-
-A notification window will display once your files have been submitted.
-
-***IMPORTANT***: Please ensure that you see the following successful submission message under Autograder Results. If you see any other output, your submission is NOT successful. Check the submission error messages in the next section. If you need assistance or see anything unusual, please ask one of the staff or post on Piazza.
-
-![image](https://user-images.githubusercontent.com/50224596/231064811-963591a0-ba98-4fcc-abf8-897bd405e49c.png)
 
 ### Submission Error Messages
 In a partial or incomplete submission you may receive the following error messages:
