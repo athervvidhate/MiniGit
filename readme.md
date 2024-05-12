@@ -22,11 +22,11 @@ For the first assignment, you will implement XYZ
 
 ### Introduction to Git
 
-[Link to tutorial](/dne)
+[Link to tutorial (currently nonexistent)](/dne)
 
 ### Introduction to Persistence
 
-[Link to tutorial](/dne)
+[Link to tutorial (currently nonexistent)](/dne)
 
 You may have noticed by now that you will need to a way to preserve the state of a program after it finishes running.
 The way this is accomplished is through the concept of **persistence**. For example, if your program writes contents to a file,
@@ -34,22 +34,62 @@ the file will stay there even after the program finishes running.
 
 First, let's start with basic persistence: writing plain text to a file.
 
-[Writing to files]
+It may be helpful to read up on the methods for the Java File class [here](https://docs.oracle.com/javase/8/docs/api/java/io/File.html).
+We will walk you through some of the basic functionality now.
 
-[Reading from files]
+To create a File object, we type in:
 
-[Managing directories]
+```
+File f = new File("example.txt");
+```
+
+Doing this just creates a reference to the path we want to work with, but it doesn't actually 
+create the file. If we wanted to do that, we would type in
+
+```
+f.createNewFile();
+```
+
+And now if you went through your file manager you would actually see a file called "example.txt". We can use the following helper 
+method provided in the `Utils` class to write to the file.
+
+```
+Utils.writeContents(f, "DSC 30 is awesome!!");
+```
+
+What if we wanted to come back at a later point, maybe after the program ended, and see the contents of the file?
+We can do so by calling the helper method:
+
+```
+Utils.readContentsAsString(f);
+```
+
+Which would then return the string "DSC 30 is awesome!!."
+
+The file class can also manage directories. If we wanted to create a directory, we could do so by using the following methods:
+```
+File folder = new File("example-folder-location");
+folder.mkdir();
+```
 
 Now, what happens if we wanted to store an entire object in a file? If we wanted to save a linked list, for example, maybe we could go through
 each node and save the data on a new line. Then we can reconstruct the original linked list in the future whenever we want by going through the
 file line by line and adding each element to a new linked list. However, this is inefficient and can quickly get very complicated for more advanced
 data structures. The concept of **serialization** comes to the rescue.
 
-[Explain serializable]
+If you go to the `Commit` class you may notice that it implements the `Serializable` interface.
 
-[Explain write object]
+```
+public class Commit implements Serializable {
+  ...
+```
 
-[Explain read object]
+When a class implements the `Serializable` interface, it allows Java to serialize the object by turning it into a sequence of bytes that can be 
+written into a file. Then, these bytes can be used to reconstruct the original object at a later time.
+
+You should look at the `writeObject` and `readObject` methods in `Utils` (as well as all the other helper methods in the file). It is also
+recommended to use `Utils.join` to compose paths to files so that we don't have to worry about inconsistencies between forward slashes and backslashes 
+on different operating systems.
 
 
 ## Part 2 - Setup
@@ -188,3 +228,7 @@ After you submit your files to GradeScope, wait for the output of the submission
 THIS IS A SUCCESSFUL SUBMISSION. YOUR SCORE WILL BE UPDATED ONCE GRADED.
 
 Otherwise, please fix the error and resubmit your files.
+
+---
+
+Credits: This project was inspired by UC Berkeley's CS61B.
