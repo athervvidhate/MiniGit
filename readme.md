@@ -12,6 +12,8 @@ many of the things that git does, such as staging changes, making commits, creat
 
 ### Contents
 - [Part 1  - Introduction](#part-1---introduction)
+  - [Intro to Git](#introduction-to-git)
+  - [Intro to Persistence](#introduction-to-persistence)
 - [Part 2 - Setup](#part-2---setup)
 - [Part 3 - Implementation](#part-3---implementation)
 - [Submission](#submission)
