@@ -304,7 +304,7 @@ inefficient. You should think about how you can get around this.
 
 If you want certain instance variables to not be serialized, you can add the keyword `transient` in front, such as
 ```
-private transient String s;
+private transient Commit prev;
 ```
 If you initialize the object using `readObject`, then transient fields will be set to `null`, which you may want to be careful about.
 
