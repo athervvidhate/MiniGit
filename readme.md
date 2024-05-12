@@ -21,6 +21,10 @@ many of the things that git does, such as staging changes, making commits, creat
 ## Part 1 - Introduction
 [(top)](#contents)
 
+### Introduction to Git
+
+[Link to tutorial (currently nonexistent)](/dne)
+
 Throughout this quarter, you have been using Git, but have you thought about how does it work? Git is a version control system where it keeps track of changes that happen in your directory and allows you to transfer across different versions of your working directory. Sounds cool right? But how does it do this? Let's start first by understanding what makes up a git repository.
 
 A git repository is just an area (a hidden folder) where it contains a bunch folders and files that reference the different versions of the working directory (the folder that contains that hidden folder). For simplicity, we will just explain the parts that we are going to implement in this project, but if you want to learn more about how git works you might find this playlist helpful [Link](https://www.youtube.com/playlist?list=PL9lx0DXCC4BNUby5H58y6s2TQVLadV8v7).
@@ -77,8 +81,10 @@ Let's see what changed in our folder by running ```ls -a``` again. You should ge
 
 As you can see, a folder with the name '.git' has been created. A folder that starts with '.' in it's name is a hidden folder. Let's explore what is in this folder.
 
-```cd .git```
-```ls```
+```
+cd .git
+ls
+```
 
 You should get the following result:
 
@@ -108,14 +114,124 @@ ref: refs/heads/main
 
 As we can see, it is just a path to a certain directory. This directory is what we refer to as branch and we will talk about it later.
 
-Hint: You will need this to change between branches.
+Hint: You will need this to change between branches, but you might have a different content of the file.
 
 ##### objects
 
-The object folder is where all the commits are stored.
-### Introduction to Git
+The object folder is where all the commits are stored. To explore this, let's change something in our repository and see how our .git folder would update.
 
-[Link to tutorial (currently nonexistent)](/dne)
+```
+cd ..
+```
+```
+echo Hello World > test.txt
+```
+This should create a file with Hello World as its content. Let's check first the status of the repository:
+```
+git status
+```
+You should get the following output:
+
+```
+On branch main
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	.DS_Store
+	test.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+```
+This is basically saying there are files that are in the working directory, but it is not added to the staging area and not commited. Hence, nothing yet changed in the .git folder, because as we said the .git just saves versions of what we tell it to save. To make .git start saving this, we will use the add cmd:
+
+```
+git add test.txt
+```
+```
+git status
+```
+You should get the following output:
+```
+On branch main
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+	new file:   test.txt
+
+```
+
+This is telling us we have stuff that are ready to be commited, which means there are things in our staging area. Now let's see what happened in our .git folder:
+
+``` 
+cd .git
+```
+```
+ls
+```
+You should get this output:
+```
+HEAD		description	index		objects
+config		hooks		info		refs
+```
+
+As you can see, an index file has been created. This is the staging area. The file stores references of updated files, whether added, deleted or modified, stored in binary code. **Hint**: you will need a similar file or folder to help in implementing add command. Now let's go back and commit our change.
+```
+cd ..
+```
+```
+git commit -m "added test.txt"
+```
+You will get an output similar to this:
+```
+[main (root-commit) 1ef99e1] added test.txt
+ 1 file changed, 1 insertion(+)
+ create mode 100644 test.txt
+```
+Now let's check the status and then the .git folder:
+```
+git status
+```
+Output:
+```
+On branch main
+nothing to commit, working tree clean
+```
+Which indicates everything is saved in the .git repository.
+
+```
+cd .git
+```
+```
+ls
+```
+Output:
+```
+COMMIT_EDITMSG	config		hooks		info		objects
+HEAD		description	index		logs		refs
+```
+You will notice that a foler logs has been created along with a another file and folder. We will just talk about logs as we don't need the other newly added folder and file for this project. Let's explore what changed in the folders we care about.
+
+Run:
+MacOS:
+```
+ls -R
+```
+Windows:
+```
+tree /f
+
+you can use this if the first one didn't work
+
+dir /s
+```
+
+This should show you a tree of everything in the folder. You will notice that the object folder has now a bunch of other folders that contain files with long name. You will also notice that heads folder within the refs folder has a new file called main. This file stores a reference to the most recent commit (if you didn't change it by checkout).
+
+Now we can introduce SHA-1. This is a hashing function that produces a 160-bit hash value for the input. This is how git stores all the references, which is basically just a hash value. You will find that in objects, the folders' names always consist of 2 characters. These are the first 2 characters of the hash value of the commit or the blob object, and the files stored within the folder have the rest of the hash value characters.
 
 ### Introduction to Persistence
 
