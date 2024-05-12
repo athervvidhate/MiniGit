@@ -302,13 +302,13 @@ It should be noted that serializing a file will recursively serialize all the po
 within that file. If you have a bunch of commits pointing to other commits, then serializing a commit will also store every commit before that one which is extremely
 inefficient. You should think about how you can get around this.
 
-If you want certain instance variables to not be serialized, you can add the keyword `transient` in front, such as
+For the above reason, if you want certain instance variables to not be serialized, you can add the keyword `transient` in front, such as
 ```
 private transient Commit prev;
 ```
 If you initialize the object using `readObject`, then transient fields will be set to `null`, which you may want to be careful about.
 
-You should use `Utils.join` to compose paths to files so that we don't have to worry about inconsistencies between forward slashes and backslashes 
+Finally, You should use `Utils.join` to compose paths to files so that you don't have to worry about inconsistencies between forward slashes and backslashes 
 on different operating systems.
 
 
