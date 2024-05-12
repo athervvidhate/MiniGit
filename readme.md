@@ -308,7 +308,7 @@ private transient Commit prev;
 ```
 If you initialize the object using `readObject`, then transient fields will be set to `null`, which you may want to be careful about.
 
-It is also recommended to use `Utils.join` to compose paths to files so that we don't have to worry about inconsistencies between forward slashes and backslashes 
+You should use `Utils.join` to compose paths to files so that we don't have to worry about inconsistencies between forward slashes and backslashes 
 on different operating systems.
 
 
