@@ -259,6 +259,8 @@ create the file. If we wanted to do that, we would type in
 f.createNewFile();
 ```
 
+**Note:** this command can be weird to deal with, and the helper methods `Utils.writeObject` and `Utils.writeContents` will handle this creation step for you, so you shouldn't have to use this method yourself in this project. It's just here for the purpose of demonstration
+
 And now if you went through your file manager you would actually see a file called "example.txt". We can use the following helper 
 method provided in the `Utils` class to write to the file.
 
