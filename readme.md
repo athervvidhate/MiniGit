@@ -21,6 +21,98 @@ many of the things that git does, such as staging changes, making commits, creat
 ## Part 1 - Introduction
 [(top)](#contents)
 
+Throughout this quarter, you have been using Git, but have you thought about how does it work? Git is a version control system where it keeps track of changes that happen in your directory and allows you to transfer across different versions of your working directory. Sounds cool right? But how does it do this? Let's start first by understanding what makes up a git repository.
+
+A git repository is just an area (a hidden folder) where it contains a bunch folders and files that reference the different versions of the working directory (the folder that contains that hidden folder). For simplicity, we will just explain the parts that we are going to implement in this project, but if you want to learn more about how git works you might find this playlist helpful [Link](https://www.youtube.com/playlist?list=PL9lx0DXCC4BNUby5H58y6s2TQVLadV8v7).
+
+The git commands we are interested in exploring are, git init, git status, git add, git commmit, git log, git branch, git checkout, git reset, and git rm.
+
+We will be using these commands when we exlore the repository later. Git init is a command that initializes the git repository. Git status tells us the current status of the repository, whether something was added, deleted, or modified. Git add is a command that sets our changes into an area called INDEX or staging area (we will be using staging area to refer to it) to be ready to commit. Git commit creates an object that stores the current directory with all things that got commited. Git log gives us information about the history of our commits. Git branch is a command that creates a new branch for us to work in. Git checkout makes us change the branch. Git reset moves the pointer of a branch to a certain commit. Git rm removes a file from the directory and from the staging area.
+
+After we have defined the commands for git, let us walk through the changes of a git repository.
+
+First, let's see what is the difference in contents of a git folder and non-git folder.
+
+Create a folder using the following cmd:
+
+```mkdir testingGit```
+
+Change directory to the created folder:
+
+```cd testingGit```
+
+Let us see what is in this folder (including hidden folders) using the following cmd:
+
+```ls -a```
+
+You should get something like this:
+
+```. ..```
+
+Side information, these are basically references to the current directory and the parent directory. That's why when you use ```cd ..``` you go back to the parent folder.
+
+Now let's make this folder a git repository by initializing git:
+
+```git init```
+
+As we expect, the command should initialize the git repository. Now our folder is a git repository and we can verify this by running the status cmd:
+
+```git status```
+
+You should get the following output:
+
+```
+On branch main 
+
+No commits yet 
+
+nothing to commit (create/copy files and use "git add" to track)
+```
+
+As promised, git status showed us the current status of the repository. It says there is nothing to commit which indicates there is nothing that was changed in the repo yet.
+
+Let's see what changed in our folder by running ```ls -a``` again. You should get the following output:
+
+```.  ..  .git```
+
+As you can see, a folder with the name '.git' has been created. A folder that starts with '.' in it's name is a hidden folder. Let's explore what is in this folder.
+
+```cd .git```
+```ls```
+
+You should get the following result:
+
+```
+HEAD		description	info		refs
+config		hooks		objects
+```
+
+Let's breakdown the contents that we need for this project. First, you will find that you have HEAD file.
+
+##### HEAD
+
+Head is a file that just stores the reference to the current branch. You can check it's content by running the following cmd:
+
+MacOS:
+```
+cat HEAD
+```
+Windows:
+```
+type HEAD
+```
+You should get the following output
+```
+ref: refs/heads/main
+```
+
+As we can see, it is just a path to a certain directory. This directory is what we refer to as branch and we will talk about it later.
+
+Hint: You will need this to change between branches.
+
+##### objects
+
+The object folder is where all the commits are stored.
 ### Introduction to Git
 
 [Link to tutorial (currently nonexistent)](/dne)
