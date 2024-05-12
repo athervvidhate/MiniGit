@@ -5,7 +5,8 @@ Due: Thursday, June 6th, 11:59 PM
 
 ## Overview
 
-For the first assignment, you will implement XYZ
+For this project you will be implementing a version control system like Git. It has reduced functionality, but it will be able to do 
+many of the things that git does, such as staging changes, making commits, creating branches, and more!
 
 **This assignment is an individual assignment.** You may ask Professors/TAs/Tutors for some guidance and help, but you can’t copy code. You may discuss the assignment conceptually with your classmates, including bugs that you ran into and how you fixed them. **However, do not look at or copy code.** This constitutes an Academic Integrity Violation.
 
@@ -15,7 +16,7 @@ For the first assignment, you will implement XYZ
 - [Part 3 - Implementation](#part-3---implementation)
 - [Submission](#submission)
 
-## **START EARLY!**
+## **START EARLY! (please)**
 
 ## Part 1 - Introduction
 [(top)](#contents)
@@ -64,7 +65,7 @@ We can do so by calling the helper method:
 Utils.readContentsAsString(f);
 ```
 
-Which would then return the string "DSC 30 is awesome!!."
+Which would then return the string "DSC 30 is awesome!!"
 
 The file class can also manage directories. If we wanted to create a directory, we could do so by using the following methods:
 ```
@@ -87,8 +88,19 @@ public class Commit implements Serializable {
 When a class implements the `Serializable` interface, it allows Java to serialize the object by turning it into a sequence of bytes that can be 
 written into a file. Then, these bytes can be used to reconstruct the original object at a later time.
 
-You should look at the `writeObject` and `readObject` methods in `Utils` (as well as all the other helper methods in the file). It is also
-recommended to use `Utils.join` to compose paths to files so that we don't have to worry about inconsistencies between forward slashes and backslashes 
+You should look at the `writeObject` and `readObject` methods in `Utils` (as well as all the other helper methods in the file).
+
+It should be noted that serializing a file will recursively serialize all the pointers 
+within that file. If you have a bunch of commits pointing to other commits, then serializing a commit will also store every commit before that one which is extremely
+inefficient. You should think about how you can get around this.
+
+If you want certain instance variables to not be serialized, you can add the keyword `transient` in front, such as
+```
+private transient String s;
+```
+If you initialize the object using `readObject`, then transient fields will be set to `null`, which you may want to be careful about.
+
+It is also recommended to use `Utils.join` to compose paths to files so that we don't have to worry about inconsistencies between forward slashes and backslashes 
 on different operating systems.
 
 
@@ -132,6 +144,17 @@ Write the following methods inside the `Repository` class:
 - [rmBranch](#rmbranch)
 - [reset](#reset)
 - [status](#status)
+
+To test your program, you will first want to compile your code by typing the following command into the terminal:
+```
+javac gitlet/Main.java
+```
+
+And then running your program with assorted commands, such as:
+
+```
+java gitlet.Main init
+```
 
 ### init
 
