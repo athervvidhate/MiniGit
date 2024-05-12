@@ -466,4 +466,4 @@ Otherwise, please fix the error and resubmit your files.
 
 ---
 
-Credits: This project was inspired by UC Berkeley's CS61B.
+### Credits: This project was inspired by UC Berkeley's CS61B.
