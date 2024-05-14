@@ -391,6 +391,7 @@ public void add(String[] args)
 This method adds a copy of the file (you may assume you will only use `add()` to add one file at a time) as it currently exists to the staging area (see the description of the `commit()`). For this reason, adding a file is also called _staging_ the file for _addition_. Staging an already-staged file overwrites the previous entry in the staging area with the new contents. The staging area should be somewhere in `.minigit` (see `init()`). If the current working version of the file is identical to the version in the current commit, do not stage it to be added, and remove it from the staging area if it is already there (as can happen when a file is changed, added, and then changed back to it’s original version).
 
 > **Exception**: if the file does not exist, print the error message **`"File does not exist"`** and exit without changing anything (see `exitWithError()`)
+
 ### commit
 
 ```Java
@@ -399,14 +400,32 @@ public void commit(String[] args)
 
 > **Usage**: `java gitlet.Main commit <message>`
 
-Description
+This method saves a snapshot of tracked files from the **current staging area** and **current commit** so they can be restored at a later time, creating a new commit. The commit is said to be tracking the saved files. By default, each commit’s snapshot of files will be exactly the same as its parent commit’s snapshot of files; it will keep versions of files exactly as they are, and not update them. A commit will only update the contents of files it is tracking that have been staged for addition at the time of commit, in which case the commit will now include the version of the file that was staged instead of the version it got from its parent (refer back to the demo to see graphical breakdown). A commit will save and start tracking any files that were staged for addition but weren’t tracked by its parent. Finally, files tracked in the current commit may be untracked in the new commit as a result being staged for removal by the `rm()` command (see below).
+
+In short, a commit has the same file contents as its parent by default, only files staged for addition and removal are the updates to the commit.
+
+> **Hint**:
+> >
+> - The staging area is cleared after a commit.
+> - After the commit command, the new commit is added as a new node in the commit tree.
+> - The commit just made becomes the “current commit”, and the HEAD pointer now points to it. The previous HEAD commit is this commit’s parent commit.
+> The current branch should also be updated to point to the commit just made.
+> >
+
+
+> **Exception**: if given an empty commit message or no message at all, print the error message **`"Please enter a commit message."`** and exit without changing anything. If no files have been staged, print the error message **`"No changes added to the commit."`** and exit without changing anything.
 
 ### rm
 
-```
+```Java
 public void rm(String[] args)
 ```
-Description
+
+> **Usage**: `java gitlet.Main rm <file name>`
+
+This method first attempts to un-stage the file if it is currently staged for addition. If the file is instead tracked in the current commit, stages it for removal/deletion and removes the file from the working directory if the user has not already done so (do not remove it unless it is tracked in the current commit).
+
+> **Exception**: if the file is neither staged or already tracked by the HEAD commit, print the error message **`"No reason to remove the file."`** and exit without changing anything.
 
 ### log
 
@@ -414,7 +433,9 @@ Description
 public void log()
 ```
 
-This method prints the commit history starting at the current head commit, display information about each commit backwards along the commit tree until the initial commit.
+> **Usage**: `java gitlet.Main log`
+
+This method prints the commit history starting at the current HEAD commit, display information about each commit backwards along the commit tree until the initial commit.
 
 ### globalLog
 
@@ -422,32 +443,70 @@ This method prints the commit history starting at the current head commit, displ
 public void globalLog()
 ```
 
+> **Usage**: `java gitlet.Main globalLog`
+
 This method displays information about **all commits** ever made and stored in the **commit area**. The order of the commits does not matter. Be aware that while **ideally** this method should give you the same set of commits as `log()`, think of why and when they differ.
+
+> **Hint**: there is a useful method in `Utils.java` that will help you iterate over files within a directory.
 
 ### find
 
-```
+```Java
 public void find(String[] args)
 ```
-Description
+
+> **Usage**: `java gitlet.Main find <commit message>`
+
+This method finds and prints out the IDs of all commits that have the given commit message, one per line. The commit message is a single command line operand; to indicate a multi-word message, put the operand in quotation marks, as is the same for the commit message in the `command()` method.
+
+> **Hint**: the same hint to `globalLog()` applies here.
+
+> **Exception**: if no such commit exists with the same message, print the error message **`"Found no commit with that message."`** and exit without changing anything.
 
 ### checkout
-```
+
+```Java
 public void checkout(String[] args)
 ```
-Description
+
+> **Usage**:
+>
+> 1. `java gitlet.Main checkout -- <file name>`
+> 2. `java gitlet.Main checkout <commit id> -- <file name>`
+> 3. `java gitlet.Main checkout <branch name>`
+>
+
+Given the use cases respective, this method:
+
+1. Takes the version of the file as it exists in the HEAD commit and puts it in the working directory, overwriting the version of the file that’s already there if there is one. The new version of the file is not staged.
+2. Takes the version of the file as it exists in the commit with the given id, and puts it in the working directory, overwriting the version of the file that’s already there if there is one. The new version of the file is not staged.
+3. Takes all files in the commit at the head of the given branch, and puts them in the working directory, overwriting the versions of the files that are already there if they exist. Also, at the end of this command, the given branch will now be considered the current branch. Any files that are tracked in the current branch but are not present in the checked-out branch are deleted. The staging area is cleared, unless the checked-out branch is the current branch (see Exception below).
+
+> **Exception**:
 
 ### branch
-```
+
+```Java
 public void branch(String[] args)
 ```
-Description
+
+> **Usage**: `java gitlet.Main branch <branch name>`
+
+This method creates a new branch with the given name, and points it at the current head commit. A branch is nothing more than a name for a reference to a commit node. This command does NOT immediately switch to the newly created branch (just as in real Git). Before you ever call branch, your code should be running with a default branch called `main` (same as the default branch since your initialization in `init()`).
+
+> **Exception**: if a branch with the given name already exists, prints the error message **`"A branch with that name already exists."`** and exits without changing anything.
 
 ### rmBranch
-```
+
+```Java
 public void rmBranch(String[] args)
 ```
-Description
+
+> **Usage**: `java gitlet.Main rm-branch <branch name>`
+
+This method deletes the branch with the given name. This only means to delete the pointer associated with the branch; it does not mean to delete all commits that were created under the branch.
+
+> **Exception**: if a branch with the given name does not exist, prints the error message **`"A branch with that name does not exist."`** and exits without changing anything. If attempting to remove the branch that you are currently on, prints the error message **`"Cannot remove the current branch."`** and exits without changing anything.
 
 ### reset
 
