@@ -358,13 +358,13 @@ Write the following methods inside the `Repository` class:
 To test your program, you will first want to compile your code by typing the following command into the terminal:
 
 ```Shell
-javac gitlet/Main.java
+javac minigit/Main.java
 ```
 
 And then running your program with assorted commands, such as:
 
 ```Shell
-java gitlet.Main init
+java minigit.Main init
 ```
 
 ### init
@@ -372,7 +372,7 @@ java gitlet.Main init
 ```Java
 public void init()
 ```
-> **Usage**: `java gitlet.Main init`
+> **Usage**: `java minigit.Main init`
 
 This method initializes the `.minigit` repository along with some blank slate repositories inside of it (think about how you can achieve this by using `Utils.join()` method and add one more layer of file/repository) like we've seen in **Part 1**.
 
@@ -386,7 +386,7 @@ This method also starts the entire version control system with one dummy commit 
 public void add(String[] args)
 ```
 
-> **Usage** `java gitlet.Main add <file name>`
+> **Usage** `java minigit.Main add <file name>`
 
 This method adds a copy of the file (you may assume you will only use `add()` to add one file at a time) as it currently exists to the staging area (see the description of the `commit()`). For this reason, adding a file is also called _staging_ the file for _addition_. Staging an already-staged file overwrites the previous entry in the staging area with the new contents. The staging area should be somewhere in `.minigit` (see `init()`). If the current working version of the file is identical to the version in the current commit, do not stage it to be added, and remove it from the staging area if it is already there (as can happen when a file is changed, added, and then changed back to it’s original version).
 
@@ -398,7 +398,7 @@ This method adds a copy of the file (you may assume you will only use `add()` to
 public void commit(String[] args)
 ```
 
-> **Usage**: `java gitlet.Main commit <message>`
+> **Usage**: `java minigit.Main commit <message>`
 
 This method saves a snapshot of tracked files from the **current staging area** and **current commit** so they can be restored at a later time, creating a new commit. The commit is said to be tracking the saved files. By default, each commit’s snapshot of files will be exactly the same as its parent commit’s snapshot of files; it will keep versions of files exactly as they are, and not update them. A commit will only update the contents of files it is tracking that have been staged for addition at the time of commit, in which case the commit will now include the version of the file that was staged instead of the version it got from its parent (refer back to the demo to see graphical breakdown). A commit will save and start tracking any files that were staged for addition but weren’t tracked by its parent. Finally, files tracked in the current commit may be untracked in the new commit as a result being staged for removal by the `rm()` command (see below).
 
@@ -421,7 +421,7 @@ In short, a commit has the same file contents as its parent by default, only fil
 public void rm(String[] args)
 ```
 
-> **Usage**: `java gitlet.Main rm <file name>`
+> **Usage**: `java minigit.Main rm <file name>`
 
 This method first attempts to un-stage the file if it is currently staged for addition. If the file is instead tracked in the current commit, stages it for removal/deletion and removes the file from the working directory if the user has not already done so (do not remove it unless it is tracked in the current commit).
 
@@ -433,7 +433,7 @@ This method first attempts to un-stage the file if it is currently staged for ad
 public void log()
 ```
 
-> **Usage**: `java gitlet.Main log`
+> **Usage**: `java minigit.Main log`
 
 This method prints the commit history starting at the current HEAD commit, display information about each commit backwards along the commit tree until the initial commit.
 
@@ -443,7 +443,7 @@ This method prints the commit history starting at the current HEAD commit, displ
 public void globalLog()
 ```
 
-> **Usage**: `java gitlet.Main globalLog`
+> **Usage**: `java minigit.Main globalLog`
 
 This method displays information about **all commits** ever made and stored in the **commit area**. The order of the commits does not matter. Be aware that while **ideally** this method should give you the same set of commits as `log()`, think of why and when they differ.
 
@@ -455,7 +455,7 @@ This method displays information about **all commits** ever made and stored in t
 public void find(String[] args)
 ```
 
-> **Usage**: `java gitlet.Main find <commit message>`
+> **Usage**: `java minigit.Main find <commit message>`
 
 This method finds and prints out the IDs of all commits that have the given commit message, one per line. The commit message is a single command line operand; to indicate a multi-word message, put the operand in quotation marks, as is the same for the commit message in the `command()` method.
 
@@ -471,9 +471,9 @@ public void checkout(String[] args)
 
 > **Usage**:
 >
-> 1. `java gitlet.Main checkout -- <file name>`
-> 2. `java gitlet.Main checkout <commit id> -- <file name>`
-> 3. `java gitlet.Main checkout <branch name>`
+> 1. `java minigit.Main checkout -- <file name>`
+> 2. `java minigit.Main checkout <commit id> -- <file name>`
+> 3. `java minigit.Main checkout <branch name>`
 >
 
 Given the use cases respective, this method:
@@ -490,7 +490,7 @@ Given the use cases respective, this method:
 public void branch(String[] args)
 ```
 
-> **Usage**: `java gitlet.Main branch <branch name>`
+> **Usage**: `java minigit.Main branch <branch name>`
 
 This method creates a new branch with the given name, and points it at the current head commit. A branch is nothing more than a name for a reference to a commit node. This command does NOT immediately switch to the newly created branch (just as in real Git). Before you ever call branch, your code should be running with a default branch called `main` (same as the default branch since your initialization in `init()`).
 
@@ -502,7 +502,7 @@ This method creates a new branch with the given name, and points it at the curre
 public void rmBranch(String[] args)
 ```
 
-> **Usage**: `java gitlet.Main rm-branch <branch name>`
+> **Usage**: `java minigit.Main rm-branch <branch name>`
 
 This method deletes the branch with the given name. This only means to delete the pointer associated with the branch; it does not mean to delete all commits that were created under the branch.
 
