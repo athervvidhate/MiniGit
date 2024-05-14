@@ -5,8 +5,7 @@ Due: Thursday, June 6th, 11:59 PM
 
 ## Overview
 
-For this project you will be implementing a version control system like Git. It has reduced functionality, but it will be able to do 
-many of the things that git does, such as staging changes, making commits, creating branches, and more!
+For this project you will be implementing a version control system like Git. It has reduced functionality, but it will be able to do many of the things that git does, such as staging changes, making commits, creating branches, and more!
 
 **This assignment is an individual assignment.** You may ask Professors/TAs/Tutors for some guidance and help, but you can’t copy code. You may discuss the assignment conceptually with your classmates, including bugs that you ran into and how you fixed them. **However, do not look at or copy code.** This constitutes an Academic Integrity Violation.
 
@@ -215,7 +214,7 @@ Output:
 COMMIT_EDITMSG	config		hooks		info		objects
 HEAD		description	index		logs		refs
 ```
-You will notice that a foler logs has been created along with a another file and folder. We will just talk about logs as we don't need the other newly added folder and file for this project. Let's explore what changed in the folders we care about.
+You will notice that a folder `logs` has been created along with a another file and folder. We will just talk about logs as we don't need the other newly added folder and file for this project. Let's explore what changed in the folders we care about.
 
 Run:
 MacOS:
@@ -240,8 +239,7 @@ Now we can introduce SHA-1. This is a hashing function that produces a 160-bit h
 [Link to tutorial (currently nonexistent)](/dne)
 
 You may have noticed by now that you will need to a way to preserve the state of a program after it finishes running.
-The way this is accomplished is through the concept of **persistence**. For example, if your program writes contents to a file,
-the file will stay there even after the program finishes running.
+The way this is accomplished is through the concept of **persistence**. For example, if your program writes contents to a file, the file will stay there even after the program finishes running.
 
 First, let's start with basic persistence: writing plain text to a file.
 
@@ -358,35 +356,49 @@ Write the following methods inside the `Repository` class:
 - [status](#status)
 
 To test your program, you will first want to compile your code by typing the following command into the terminal:
-```
+
+```Shell
 javac gitlet/Main.java
 ```
 
 And then running your program with assorted commands, such as:
 
-```
+```Shell
 java gitlet.Main init
 ```
 
 ### init
 
-```
+```Java
 public void init()
 ```
-Description
+> **Usage**: `java gitlet.Main init`
+
+This method initializes the `.minigit` repository along with some blank slate repositories inside of it (think about how you can achieve this by using `Utils.join()` method and add one more layer of file/repository) like we've seen in **Part 1**.
+
+This method also starts the entire version control system with one dummy commit with no files, no previous parent, and the placeholder message `"initial commit"` (see `Commit()`). It will also start the system with one single branch `main` (see `branch()`), which will be the current branch and points to the initial dummy commit.
+
+> **Hint**: think about what repositories and files do you need inside `.minigit`, much like the ones inside a real `.git` repository, to do the following: tracking the **staging area**, tracking changes **added**, tracking changes **deleted**, tracking commits made, tracking individual file content, tracking the **HEAD**, tracking the branches, and lastly tracking the current branch.
 
 ### add
 
-```
+```Java
 public void add(String[] args)
 ```
-Description
 
+> **Usage** `java gitlet.Main add <file name>`
+
+This method adds a copy of the file (you may assume you will only use `add()` to add one file at a time) as it currently exists to the staging area (see the description of the `commit()`). For this reason, adding a file is also called _staging_ the file for _addition_. Staging an already-staged file overwrites the previous entry in the staging area with the new contents. The staging area should be somewhere in `.minigit` (see `init()`). If the current working version of the file is identical to the version in the current commit, do not stage it to be added, and remove it from the staging area if it is already there (as can happen when a file is changed, added, and then changed back to it’s original version).
+
+> **Exception**: if the file does not exist, print the error message **`"File does not exist"`** and exit without changing anything (see `exitWithError()`)
 ### commit
 
-```
+```Java
 public void commit(String[] args)
 ```
+
+> **Usage**: `java gitlet.Main commit <message>`
+
 Description
 
 ### rm
@@ -397,17 +409,20 @@ public void rm(String[] args)
 Description
 
 ### log
-```
+
+```Java
 public void log()
 ```
-Description
+
+This method prints the commit history starting at the current head commit, display information about each commit backwards along the commit tree until the initial commit.
 
 ### globalLog
 
-```
+```Java
 public void globalLog()
 ```
-Description
+
+This method displays information about **all commits** ever made and stored in the **commit area**. The order of the commits does not matter. Be aware that while **ideally** this method should give you the same set of commits as `log()`, think of why and when they differ.
 
 ### find
 
