@@ -5,14 +5,13 @@ Due: Thursday, June 6th, 11:59 PM
 
 ## Overview
 
-For this project you will be implementing a version control system like Git. It has reduced functionality, but it will be able to do many of the things that git does, such as staging changes, making commits, creating branches, and more!
+For this project you will be implementing a version control system like Git. It has reduced functionality, but it will be able to do 
+many of the things that git does, such as staging changes, making commits, creating branches, and more!
 
 **This assignment is an individual assignment.** You may ask Professors/TAs/Tutors for some guidance and help, but you can’t copy code. You may discuss the assignment conceptually with your classmates, including bugs that you ran into and how you fixed them. **However, do not look at or copy code.** This constitutes an Academic Integrity Violation.
 
 ### Contents
 - [Part 1  - Introduction](#part-1---introduction)
-  - [Intro to Git](#introduction-to-git)
-  - [Intro to Persistence](#introduction-to-persistence)
 - [Part 2 - Setup](#part-2---setup)
 - [Part 3 - Implementation](#part-3---implementation)
 - [Submission](#submission)
@@ -56,7 +55,17 @@ You should get something like this:
 
 Side information, these are basically references to the current directory and the parent directory. That's why when you use ```cd ..``` you go back to the parent folder.
 
-Now let's make this folder a git repository by initializing git:
+Let's first see if the current folder is a git repository or not:
+
+Run:
+```git status```
+
+Output:
+```
+fatal: not a git repository (or any of the parent directories): .git
+```
+
+As you can see, the folder isn't a repository and it says .git folder is missing. Now let's make this folder a git repository by initializing git:
 
 ```git init```
 
@@ -100,14 +109,11 @@ Let's breakdown the contents that we need for this project. First, you will find
 
 Head is a file that just stores the reference to the current branch. You can check it's content by running the following cmd:
 
-MacOS:
+Run:
 ```
 cat HEAD
 ```
-Windows:
-```
-type HEAD
-```
+
 You should get the following output
 ```
 ref: refs/heads/main
@@ -140,7 +146,6 @@ No commits yet
 
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
-	.DS_Store
 	test.txt
 
 nothing added to commit but untracked files present (use "git add" to track)
@@ -214,23 +219,112 @@ Output:
 COMMIT_EDITMSG	config		hooks		info		objects
 HEAD		description	index		logs		refs
 ```
-You will notice that a folder `logs` has been created along with a another file and folder. We will just talk about logs as we don't need the other newly added folder and file for this project. Let's explore what changed in the folders we care about.
+You will notice that a foler logs has been created along with a another file and folder. We will just talk about logs as we don't need the other newly added folder and file for this project. Let's explore what changed in the folders we care about.
 
 Run:
-MacOS:
 ```
 ls -R
 ```
-Windows:
+
+This should show you a tree of everything in the folder. You will notice that the object folder has now a bunch of other folders that contain files with long names (Hash value). You will also notice that heads folder within the refs folder has a new file called main. This file stores a reference to the most recent commit (if you didn't change it by checkout).
+
+After seeing the updates when we make a commit, let's see what happens when we create a new branch and do other commits.
+
 ```
-tree /f
+cd ..
+git branch
+```
+Output:
+```
+* main
+```
+This shows us the branches we have and the * indicates which branch are we currently on. Let's create a branch
 
-you can use this if the first one didn't work
-
-dir /s
+```
+git branch first_branch
+git branch
+```
+Output:
+```
+  first_branch
+* main
+```
+As you can see, a branch with the name 'first_branch' has been created. Let's see what changed in the .git folder:
+```
+cd .git
+ls -R
 ```
 
-This should show you a tree of everything in the folder. You will notice that the object folder has now a bunch of other folders that contain files with long name. You will also notice that heads folder within the refs folder has a new file called main. This file stores a reference to the most recent commit (if you didn't change it by checkout).
+Output:
+```
+COMMIT_EDITMSG	config		hooks		info		objects
+HEAD		description	index		logs		refs
+
+./hooks:
+applypatch-msg.sample		pre-push.sample
+commit-msg.sample		pre-rebase.sample
+fsmonitor-watchman.sample	pre-receive.sample
+post-update.sample		prepare-commit-msg.sample
+pre-applypatch.sample		push-to-checkout.sample
+pre-commit.sample		update.sample
+pre-merge-commit.sample
+
+./info:
+exclude
+
+./logs:
+HEAD	refs
+
+./logs/refs:
+heads
+
+./logs/refs/heads:
+first_branch	main
+
+./objects:
+1e	55	86	info	pack
+
+./objects/1e:
+6dbf97adb05c42dcb537cd717e368812dc23b5
+
+./objects/55:
+7db03de997c86a4a028e1ebd3a1ceb225be238
+
+./objects/86:
+686f469ef45ef6d8f588fcabbf19d8403edacb
+
+./objects/info:
+
+./objects/pack:
+
+./refs:
+heads	tags
+
+./refs/heads:
+first_branch	main
+
+./refs/tags:
+```
+
+The git branch [NAME] creates a branch with that name if it doesn't exist and makes this branch will store a reference of the commit head is pointing to (Note: Head points to the commit indirectly H -> branch -> commit). If you check the heads folder within refs, you will find a new file has been created named 'first_branch'. Notice that both main and first_branch are just normal text files (**Hint**: Helpful when implementing branch method). These files just store a reference to their most recent commits. This means that as of now, both of them should store the same thing as we didn't make any more commits in either. Let's verify this:
+
+```
+cd refs
+cd heads
+cat main
+cat first_branch
+```
+Output:
+```
+86686f469ef45ef6d8f588fcabbf19d8403edacb
+86686f469ef45ef6d8f588fcabbf19d8403edacb
+```
+We now know how the branches work and how they are stored.
+Now that we have seen how the .git folder updates and showed the creation of the different objects, let's describe how we want the minigit to work. First, let's see the .minigit folder as an area of operation.
+
+![Minigit area of operation](assets/images/minigit_area.jpg)
+
+Note: Let's define each area in the figure and show what role does it play with respect to .git. First, the head file. This file should just store a reference to the current working directory, whether it is a branch or a commit (**Hint**: helpful when you implement checkout). Branches is a directory where you should store your branches (**Hint**: remember branches are just files that store a reference).
 
 Now we can introduce SHA-1. This is a hashing function that produces a 160-bit hash value for the input. This is how git stores all the references, which is basically just a hash value. You will find that in objects, the folders' names always consist of 2 characters. These are the first 2 characters of the hash value of the commit or the blob object, and the files stored within the folder have the rest of the hash value characters.
 
@@ -239,7 +333,8 @@ Now we can introduce SHA-1. This is a hashing function that produces a 160-bit h
 [Link to tutorial (currently nonexistent)](/dne)
 
 You may have noticed by now that you will need to a way to preserve the state of a program after it finishes running.
-The way this is accomplished is through the concept of **persistence**. For example, if your program writes contents to a file, the file will stay there even after the program finishes running.
+The way this is accomplished is through the concept of **persistence**. For example, if your program writes contents to a file,
+the file will stay there even after the program finishes running.
 
 First, let's start with basic persistence: writing plain text to a file.
 
