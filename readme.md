@@ -27,13 +27,13 @@ many of the things that git does, such as staging changes, making commits, creat
 
 [Link to tutorial (currently nonexistent)](/dne)
 
-Throughout this quarter, you have been using Git, but have you thought about how does it work? Git is a version control system where it keeps track of changes that happen in your directory and allows you to transfer across different versions of your working directory. Sounds cool right? But how does it do this? Let's start first by understanding what makes up a git repository.
+Throughout this quarter, you have been using Git, but have you thought about how it works? Git is a version control system that keeps track of changes that happen in your directory and allows you to switch between different versions of your working directory. Sounds cool right? But how does it do this? Let's start first by understanding what makes up a git repository.
 
-A git repository is just an area (a hidden folder) where it contains a bunch folders and files that reference the different versions of the working directory (the folder that contains that hidden folder). For simplicity, we will just explain the parts that we are going to implement in this project, but if you want to learn more about how git works you might find this playlist helpful [Link](https://www.youtube.com/playlist?list=PL9lx0DXCC4BNUby5H58y6s2TQVLadV8v7).
+A git repository is just an area (a hidden folder) that contains a bunch of folders and files that store different versions of the working directory (the folder that contains that hidden folder). For simplicity, we will just explain the parts that we are going to implement in this project, but if you want to learn more about how git works you might find [this](https://www.youtube.com/playlist?list=PL9lx0DXCC4BNUby5H58y6s2TQVLadV8v7) playlist helpful.
 
-The git commands we are interested in exploring are, git init, git status, git add, git commmit, git log, git branch, git checkout, git reset, and git rm.
+The git commands we are interested in exploring are: git init, git status, git add, git commmit, git log, git branch, git checkout, git reset, and git rm.
 
-We will be using these commands when we exlore the repository later. Git init is a command that initializes the git repository. Git status tells us the current status of the repository, whether something was added, deleted, or modified. Git add is a command that sets our changes into an area called INDEX or staging area (we will be using staging area to refer to it) to be ready to commit. Git commit creates an object that stores the current directory with all things that got commited. Git log gives us information about the history of our commits. Git branch is a command that creates a new branch for us to work in. Git checkout makes us change the branch. Git reset moves the pointer of a branch to a certain commit. Git rm removes a file from the directory and from the staging area.
+We will be using these commands when we exlore the repository later. Git init is a command that initializes the git repository. Git status tells us the current status of the repository, whether something was added, deleted, or modified. Git add is a command that sets our changes into an area called INDEX or staging area (we will be using staging area to refer to it) to be ready to committed. Git rm removes a file from the directory and notes this change for the next commit. Git commit saves all the tracked changes since the last commit into a new version. Git log gives us information about the history of our commits. Git branch is a command that creates a new branch for us to work in, say, if we wanted to commit new experimental changes without modifying the main branch. Git checkout lets us change the branch. Git reset moves the pointer of a branch to a certain commit.
 
 After we have defined the commands for git, let us walk through the changes of a git repository.
 
@@ -321,6 +321,44 @@ Output:
 86686f469ef45ef6d8f588fcabbf19d8403edacb
 86686f469ef45ef6d8f588fcabbf19d8403edacb
 ```
+
+Let's check what happens when we change the branch using **git checkout** command. 
+
+Run:
+```
+git checkout first_branch
+```
+Output:
+```
+Switched to branch 'first_branch'
+```
+Run:
+```
+git branch
+```
+Output:
+```
+* first_branch
+  main
+```
+As we can see, the asterisk is now next to first_branch instead of main which means that we are now on first_branch instead of main. Let's now inspect the .git folder.
+
+Run:
+```
+cd .git
+ls -R
+```
+You will get the same output as last time which might make you feel nothing has changed; however, there is one little thing that changed, which is the head file. As we said earlier, the head file just points towards the current branch, and since we changed the branch we should expect that head points towards first_branch instead of main, so let's verify this.
+
+Run:
+```
+cat HEAD
+```
+Output:
+```
+ref: refs/heads/first_branch
+```
+
 We now know how the branches work and how they are stored.
 Now that we have seen how the .git folder updates and showed the creation of the different objects, let's describe how we want the minigit to work. First, let's see the .minigit folder as an area of operation.
 
@@ -328,7 +366,7 @@ Now that we have seen how the .git folder updates and showed the creation of the
 
 Note: Let's define each area in the figure and show what role does it play with respect to .git. First, the head file. This file should just store a reference to the current working directory, whether it is a branch or a commit (**Hint**: helpful when you implement checkout). Branches is a directory where you should store your branches (**Hint**: remember branches are just files that store a reference).
 
-Now we can introduce SHA-1. This is a hashing function that produces a 160-bit hash value for the input. This is how git stores all the references, which is basically just a hash value. You will find that in objects, the folders' names always consist of 2 characters. These are the first 2 characters of the hash value of the commit or the blob object, and the files stored within the folder have the rest of the hash value characters.
+Now we can introduce SHA-1. This is a hashing function that produces a 160-bit hash value for the input. This is how git stores all the references, which is basically just a hash value. You will find that in objects, folders' names always consist of 2 characters. These are the first 2 characters of the hash value of the commit or the blob object, and the files stored within the folder have the rest of the hash value characters.
 
 ### Introduction to Persistence
 
