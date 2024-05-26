@@ -641,7 +641,7 @@ This method deletes the branch with the given name. This only means to delete th
 
 ### reset
 
-```
+```Java
 public void reset(String[] args)
 ```
 
@@ -653,7 +653,7 @@ This method should check out all files in the given commit and remove all files 
 
 ### status
 
-```
+```Java
 public void status()
 ```
 
