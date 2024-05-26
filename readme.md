@@ -1,7 +1,4 @@
-# Final Project: MiniGit
-
-Due: Thursday, June 6th, 11:59 PM  
-200 points
+# Bonus Project: MiniGit
 
 ## Overview
 
@@ -25,7 +22,7 @@ many of the things that git does, such as staging changes, making commits, creat
 
 ### Introduction to Git
 
-[Link to tutorial (currently nonexistent)](/dne)
+[Link to tutorial](https://podcast.ucsd.edu/watch/sp24/dsc30_a01/7) (until 21:18)
 
 Throughout this quarter, you have been using Git, but have you thought about how it works? Git is a version control system that keeps track of changes that happen in your directory and allows you to switch between different versions of your working directory. Sounds cool right? But how does it do this? Let's start first by understanding what makes up a git repository.
 
@@ -366,11 +363,12 @@ Now that we have seen how the .git folder updates and showed the creation of the
 
 Note: Let's define each area in the figure and show what role does it play with respect to .git. First, the head file. This file should just store a reference to the current working directory, whether it is a branch or a commit (**Hint**: helpful when you implement checkout). Branches is a directory where you should store your branches (**Hint**: remember branches are just files that store a reference).
 
-Now we can introduce SHA-1. This is a hashing function that produces a 160-bit hash value for the input. This is how git stores all the references, which is basically just a hash value. You will find that in objects, folders' names always consist of 2 characters. These are the first 2 characters of the hash value of the commit or the blob object, and the files stored within the folder have the rest of the hash value characters.
+Now we can introduce SHA-1. It works like any other hash function, but it takes in an object and returns a 160-bit hash value. You may assume that if two objects have the same hash value when passed through SHA1, then they are equal (note: this is not generally true, only the converse is). This is how git computes hash codes for its objects.
+ 
 
 ### Introduction to Persistence
 
-[Link to tutorial (currently nonexistent)](/dne)
+[Link to tutorial](https://podcast.ucsd.edu/watch/sp24/dsc30_a01/7) (starting at 23:28)
 
 You may have noticed by now that you will need to a way to preserve the state of a program after it finishes running.
 The way this is accomplished is through the concept of **persistence**. For example, if your program writes contents to a file,
@@ -476,7 +474,7 @@ methods inside the `Utils` class.
 ## Part 3 - Implementation
 [(top)](#contents)
 
-Write the following methods inside the `Repository` class:
+Write the following methods inside the `Repository` class inside the `gitlet` folder:
 - [init](#init)
 - [add](#add)
 - [commit](#commit)
@@ -648,30 +646,46 @@ This method deletes the branch with the given name. This only means to delete th
 ```
 public void reset(String[] args)
 ```
-Description
+
+> **Usage**: `java minigit.Main `
 
 ### status
 
 ```
 public void status()
 ```
-Description
 
-## Submission
+> **Usage**: `java minigit.Main status`
+
+This method displays files staged for addition/removal as well as all existing branches. The active branch should have a `*` in front.
+
+Example output:
+
+```
+=== Branches ===
+*main
+vranch2
+
+=== Staged Files ===
+one.txt
+two.txt
+
+=== Removed Files ===
+three.txt
+
+=== Modifications Not Staged For Commit ===
+four.txt (deleted)
+five.txt (modified)
+
+=== Untracked Files ===
+six.txt
+
+```
+
+## Testing
 [(top)](#contents)
 
-Files to Submit- minigit/Commit.java
-- minigit/Main.java
-- minigit/Repository.java
-- minigit/Utils.java
-
-To submit your files, you will need to push your code to your private Github repo first, then turn in this PA to GradeScope by selecting Github as the submission method.
-
-After you submit your files to GradeScope, wait for the output of the submission script. If you see the following message after your submission, your submission is successful and you can ignore the warnings in the autograder output:
-
-THIS IS A SUCCESSFUL SUBMISSION. YOUR SCORE WILL BE UPDATED ONCE GRADED.
-
-Otherwise, please fix the error and resubmit your files.
+To do manual tests you can compile your files using `javac gitlet/Main.java` and then run commands by entering things like `java gitlet.Main init`. You can also run the provided tests, although they may require an older version of Java (JDK 17) and JUnit (Junit 4).
 
 ---
 
