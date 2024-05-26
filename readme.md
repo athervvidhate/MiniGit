@@ -15,8 +15,6 @@ many of the things that git does, such as staging changes, making commits, creat
 - [Part 3 - Implementation](#part-3---implementation)
 - [Submission](#submission)
 
-## **START EARLY! (please)**
-
 ## Part 1 - Introduction
 [(top)](#contents)
 
@@ -647,7 +645,11 @@ This method deletes the branch with the given name. This only means to delete th
 public void reset(String[] args)
 ```
 
-> **Usage**: `java minigit.Main `
+> **Usage**: `java minigit.Main reset <commit-id>`
+
+This method should check out all files in the given commit and remove all files that were not present at the time of the given commit. The staging area should be cleared and the HEAD pointer of the current branch should be updated 
+
+> **Hint:** you might want to reuse an earlier method, since this accomplishes a very similar result with one modification
 
 ### status
 
