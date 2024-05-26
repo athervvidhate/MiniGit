@@ -472,7 +472,7 @@ methods inside the `Utils` class.
 ## Part 3 - Implementation
 [(top)](#contents)
 
-Write the following methods inside the `Repository` class inside the `gitlet` folder:
+Write the following methods inside the `Repository` class inside the `minigit` folder:
 - [init](#init)
 - [add](#add)
 - [commit](#commit)
@@ -687,7 +687,7 @@ six.txt
 ## Testing
 [(top)](#contents)
 
-To do manual tests you can compile your files using `javac gitlet/Main.java` and then run commands by entering things like `java gitlet.Main init`. You can also run the provided tests, although they may require an older version of Java (JDK 17) and JUnit (Junit 4).
+To do manual tests you can compile your files using `javac minigit/Main.java` and then run commands by entering things like `java minigit.Main init`. You can also run the provided tests, although they may require an older version of Java (JDK 17) and JUnit (Junit 4).
 
 ---
 
