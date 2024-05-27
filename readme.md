@@ -5,15 +5,13 @@
 For this project you will be implementing a version control system like Git. It has reduced functionality, but it will be able to do 
 many of the things that git does, such as staging changes, making commits, creating branches, and more!
 
-**This assignment is an individual assignment.** You may ask Professors/TAs/Tutors for some guidance and help, but you can’t copy code. You may discuss the assignment conceptually with your classmates, including bugs that you ran into and how you fixed them. **However, do not look at or copy code.** This constitutes an Academic Integrity Violation.
-
 ### Contents
 - [Part 1  - Introduction](#part-1---introduction)
 - [Part 2 - Setup](#part-2---setup)
 - [Part 3 - Implementation](#part-3---implementation)
  	- [Intro to Git](#introduction-to-git)
 	- [Intro to Persistence](#introduction-to-persistence)
-- [Submission](#submission)
+- [Testing](#testing)
 
 ## Part 1 - Introduction
 [(top)](#contents)
