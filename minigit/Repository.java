@@ -18,6 +18,11 @@ public class Repository {
     private File currBranch;
     private String currBranchVal = "temp";
 
+
+    /** Constructor for Repository class
+     *
+     *  Sets paths of various files to their respective variables for access.
+     */
     public Repository() {
         File cb = Utils.join(MINIGIT_PATH, "branches", "currBranch");
         File h = Utils.join(MINIGIT_PATH, "HEAD");
@@ -36,6 +41,12 @@ public class Repository {
         }
     }
 
+
+    /** Initializes a MiniGit Repository.
+     *
+     * Creates all the directories for a MiniGit repo, as well as making an initial empty commit to begin the version
+     * control system.
+     */
     public void init() {
         if(MINIGIT_PATH.exists()) {
             System.out.println("A MiniGit version-control system already exists in the current directory.");
@@ -96,6 +107,9 @@ public class Repository {
         }
     }
 
+
+    /** Adds a file to MiniGit's staging area.
+     */
     public void add(String[] args) {
         File given = Utils.join(System.getProperty("user.dir"), args[1]);
         if(given.exists()) { //does the file exist?
@@ -112,7 +126,8 @@ public class Repository {
         }
     }
 
-    // Helper method for add(), used to simplify reused code
+    /** Helper method for add(), used to simplify reused code
+     */
     public void addHelper(File file, String filename) {
         if(idx.containsStagedAddition(filename)) { // is it in the staging area, staged for addition?
             if(idx.getFileHash(filename).equals(Utils.sha1(Utils.readContents(file)))) { // is it the same version?
@@ -135,6 +150,10 @@ public class Repository {
         }
     }
 
+    /** Creates a commit with an inputted message.
+     *
+     * @param args args[1] is the commit message
+     */
     @SuppressWarnings("unchecked")
     public void commit(String[] args) {
         if(args[1].equals("")) {
@@ -183,6 +202,10 @@ public class Repository {
         }
     }
 
+    /** Removes a file the staging area or stages a file to be removed in the next commit.
+     *
+     * @param args args[1] is the name of the file to be removed
+     */
     @SuppressWarnings("unchecked")
     public void rm(String[] args) {
         Commit acceptedCommit = getLatestCommit();
@@ -207,12 +230,21 @@ public class Repository {
         Utils.writeObject(Utils.join(MINIGIT_PATH, "index"), idx);
     }
 
+    /** Gets information about every commit in the current branch
+     *
+     * Information includes commit file name (hash value), the date it was created, and its message.
+     */
     public void log() {
         String latestCommitHash = currBranchVal;
         Commit latest = getLatestCommit();
         logHelper(latest, latestCommitHash);
     }
 
+
+    /** Helper method for log()
+     *
+     * This is called recursively all the back to the initial commit.
+     */
     public void logHelper(Commit com, String comHash) {
         System.out.println("===");
         System.out.println("commit " + comHash);
@@ -226,6 +258,10 @@ public class Repository {
         logHelper(Utils.readObject(Utils.join(MINIGIT_PATH, "commits", parentHash), Commit.class) , parentHash);
     }
 
+    /** Gets information about every commit in the repository
+     *
+     * Information includes commit file name (hash value), the date it was created, and its message.
+     */
     public void globalLog() {
         File commitsDir = Utils.join(MINIGIT_PATH, "commits");
         ArrayList<String> allCommits = new ArrayList<>(Utils.plainFilenamesIn(commitsDir));
@@ -238,6 +274,10 @@ public class Repository {
         }
     }
 
+    /** Finds all commits in the repository that have the inputted commit message
+     *
+     * @param args args[1] is the commit message to find commits with
+     */
     public void find(String[] args) {
         File commitsDir = Utils.join(MINIGIT_PATH, "commits");
         ArrayList<String> allCommits = new ArrayList<>(Utils.plainFilenamesIn(commitsDir));
@@ -256,6 +296,17 @@ public class Repository {
         }
     }
 
+    /** Three different cases
+     *
+     * Case 1: checkout <branch name>:
+     * This gets all the files from the head commit of the given branch and copies them into the current working directory.
+     *
+     * Case 2: checkout -- <filename>
+     * This gets the given file from the head commit of the current branch and copies it into the current working directory.
+     *
+     * Case 3: checkout <commit id> -- <filename>
+     * This gets the given file from a given commit and copies it in the current working directory.
+     */
     public void checkout(String[] args) {
         if(args.length == 2) { //gets all files from branch, sets current branch
             if(args[1].equals(Utils.readContentsAsString(currBranch))) {
@@ -281,7 +332,6 @@ public class Repository {
 
             for(String filename: files1) {
                 File file = Utils.join(System.getProperty("user.dir"), filename);
-                //serialize
                 if(!com.getBlobs().containsKey(filename) && checkout.getBlobs().containsValue(Utils.sha1(Utils.readContents(file)))) {
                     System.out.println("There is an untracked file in the way; delete it, or add and commit it first.");
                     System.exit(9);
@@ -368,6 +418,10 @@ public class Repository {
         }
     }
 
+    /** Creates a new branch in the version control system.
+     *
+     * @param args args[1] is the name of the branch to be made
+     */
     public void branch(String[] args) {
         List<String> currentBranches = Utils.plainFilenamesIn(Utils.join(MINIGIT_PATH, "branches"));
 
@@ -385,6 +439,11 @@ public class Repository {
         }
     }
 
+    /** Removes a branch from the version control system, but does not remove the version of the files tracked in
+     *  the commits of the branch.
+     *
+     * @param args args[1] is the name of the branch to be removed
+     */
     public void rmBranch(String[] args) {
         List<String> branches = Utils.plainFilenamesIn(Utils.join(MINIGIT_PATH, "branches"));
         if(!branches.contains(args[1])) {
@@ -398,6 +457,11 @@ public class Repository {
         }
     }
 
+    /** Gets all files from a given commit and copies them into the current working directory, then changes the head
+     * commit of the branch to be the given commit.
+     *
+     * @param args args[1] is the name of the file to be removed
+     */
     public void reset(String[] args) {
         Commit checkout = new Commit(null, null, null);
         try {
@@ -446,6 +510,9 @@ public class Repository {
         Utils.writeObject(Utils.join(MINIGIT_PATH, "index"), idx);
     }
 
+    /** Gets the name of all the branches that exist, displays the files currently staged for addition and removal,
+     * and modifications for files that aren't in the staging area and completely untracked files.
+     */
     public void status() {
         List<String> branches = Utils.plainFilenamesIn(Utils.join(MINIGIT_PATH, "branches"));
         List<String> allFiles = new ArrayList<>(Utils.plainFilenamesIn(System.getProperty("user.dir")));
@@ -535,6 +602,10 @@ public class Repository {
         System.exit(18);
     }
 
+    /** Gets the latest commit that the HEAD file points to
+     *
+     * @return Returns the most recent Commit
+     */
     public Commit getLatestCommit() {
         return Utils.readObject(Utils.join(MINIGIT_PATH, "commits", currBranchVal), Commit.class);
     }
