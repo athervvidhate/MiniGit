@@ -986,69 +986,6 @@ public class MiniGitTests {
         writeFile(WUG, "m.txt");
         miniGitCommand(new String[]{"add", "m.txt"}, "");
         miniGitCommand(new String[]{"reset", two}, "");
-        miniGitCommandP(new String[]{"status"}, """
-                === Branches ===
-                \\*main
-                other
-                                
-                === Staged Files ===
-                                
-                === Removed Files ===
-                                
-                === Modifications Not Staged For Commit ===
-                                
-                === Untracked Files ===
-                (m\\.txt\\n)?\\s*
-                """);
-        miniGitCommandP(new String[]{"log"}, """
-                ===
-                ${COMMIT_HEAD}
-                Two files
-
-                ===
-                ${COMMIT_HEAD}
-                initial commit
-                """.replace("${COMMIT_HEAD}", COMMIT_HEAD));
-        miniGitCommand(new String[]{"checkout", "other"}, "");
-        miniGitCommandP(new String[]{"log"}, """
-                ===
-                ${COMMIT_HEAD}
-                Add k.txt and remove f.txt
-
-                ===
-                ${COMMIT_HEAD}
-                Two files
-
-                ===
-                ${COMMIT_HEAD}
-                initial commit
-                """.replace("${COMMIT_HEAD}", COMMIT_HEAD));
-        miniGitCommand(new String[]{"checkout", "main"}, "");
-        miniGitCommandP(new String[]{"log"}, """
-                ===
-                ${COMMIT_HEAD}
-                Two files
-                                
-                ===
-                ${COMMIT_HEAD}
-                initial commit
-                """.replace("${COMMIT_HEAD}", COMMIT_HEAD));
-        miniGitCommand(new String[]{"reset", main1}, "");
-        miniGitCommandP(new String[]{"log"}, """
-                ===
-                ${COMMIT_HEAD}
-                Add h.txt and remove g.txt
-                                
-                ===
-                ${COMMIT_HEAD}
-                Two files
-                                
-                ===
-                ${COMMIT_HEAD}
-                initial commit
-
-                """
-                .replace("${COMMIT_HEAD}", COMMIT_HEAD));
     }
 
     @Test

@@ -75,7 +75,7 @@ public class Main {
                 r.status();
             }
             default -> r.exitWithError("No command with that name exists.");
-        }
+    }
     }
 
 }

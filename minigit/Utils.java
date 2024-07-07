@@ -66,7 +66,7 @@ class Utils {
     /* FILE DELETION */
 
     /** Deletes FILE if it exists and is not a directory.  Returns true
-     *  if FILE was deleted, and false otherwise.  Refuses to delete FILE
+     *  if FILE was deleted, and false otherwise1.  Refuses to delete FILE
      *  and throws IllegalArgumentException unless the directory designated by
      *  FILE also contains a directory named .minigit. */
     static boolean restrictedDelete(File file) {
